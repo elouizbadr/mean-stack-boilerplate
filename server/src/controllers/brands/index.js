@@ -1,24 +1,24 @@
 const { Router: router } = require('express');
-const { authenticate } = require('../../middleware');
+// const { authenticate } = require('../../middleware');
 const update = require('./update');
-const create = require('./careate');
+const create = require('./create');
 const remove = require('./remove');
 const get = require('./get');
 const { list } = require('./list');
 
 
 /**
- * Provide Api for Cars
+ * Provide Api for Brands
 
- GET /api/v1/cars/ - List
+ GET /api/v1/brands/ - List
  @header
       Authorization: Bearer {token}
 
- GET /api/v1/cars/:_id - get single
+ GET /api/v1/brands/:_id - get single
  @header
         Authorization: Bearer {token}
 
- POST /api/v1/cars/ - Create
+ POST /api/v1/brands/ - Create
  @header
       Authorization: Bearer {token}
  @param
@@ -28,7 +28,7 @@ const { list } = require('./list');
        batteryCapacity (require) - {number}
        transform (require) - {string}
 
- PUT /api/v1/cars/:_id - Update
+ PUT /api/v1/brands/:_id - Update
  @header
         Authorization: Bearer {token}
  @param
@@ -38,7 +38,7 @@ const { list } = require('./list');
        batteryCapacity - {number}
        transform - {string}
 
- DELETE /api/v1/cars/:_id - Remove
+ DELETE /api/v1/brands/:_id - Remove
  @header
         Authorization: Bearer {token}
 
@@ -48,10 +48,10 @@ module.exports = (models, { config }) => {
   const api = router();
 
   api.get('/', /*authenticate,*/ list(models, { config }));
-  api.get('/:_id', authenticate, get(models));
-  api.post('/', authenticate, create(models));
-  api.put('/:_id', authenticate, update(models));
-  api.delete('/:_id', authenticate, remove(models));
+  api.get('/:_id', /*authenticate,*/ get(models));
+  api.post('/', /*authenticate,*/ create(models));
+  api.put('/:_id', /*authenticate,*/ update(models));
+  api.delete('/:_id', /*authenticate,*/ remove(models));
 
   return api;
 };

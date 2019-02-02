@@ -1,7 +1,7 @@
 const { sendList } = require('../../middleware/index');
 const { queryToObject } = require('../../utils/requests');
 
-const list = ({ Cars }, { config }) => async (req, res, next) => {
+const list = ({ Car }, { config }) => async (req, res, next) => {
 	try {
 		let { search, limit, skip, lat, lng, distance } = queryToObject(req.query);
 
@@ -9,9 +9,10 @@ const list = ({ Cars }, { config }) => async (req, res, next) => {
 		limit = parseInt(limit, 10);
 		limit = limit && limit < config.maxLimitPerQuery ? limit : config.maxLimitPerQuery;
 
-		const query = { $and : [] };
+		// const query = { $and : [] };
+		const query = { };
 		if (search) {
-			query.$and.push({ $or: new Cars().fieldsToSearch(search) });
+			query.$and = [{ $or: new Car().fieldsToSearch(search) }];
 		}
     // if need work with cords
 		if (lat && lng) {
@@ -25,8 +26,8 @@ const list = ({ Cars }, { config }) => async (req, res, next) => {
 			});
 		}
 
-		const count = await Cars.find(query).count();
-		const businesses = await Cars.find(query)
+		const count = await Car.find(query).count();
+		const businesses = await Car.find(query)
 		//.sort({ : 1 })
 			.skip(skip)
 			.limit(limit);
