@@ -1,0 +1,7 @@
+<h2>My Brands</h2>
+<ul class="brands">
+  <li *ngFor="let brand of brands">
+    <span class="badge">{{brand.name}}</span> {{brand.slogan}}
+    <img [src]="brand.logo">
+  </li>
+</ul>
